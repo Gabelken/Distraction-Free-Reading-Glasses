@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Distraction-Free Reading Glasses</string>
+    <string name="refresh">Refresh</string>
+    <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
+    <string name="selection_instructions">Please Select Your Arduino Device From the List</string>
+</resources>
