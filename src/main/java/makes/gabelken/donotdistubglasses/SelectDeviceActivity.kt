@@ -14,18 +14,22 @@ import org.jetbrains.anko.toast
 
 class SelectDeviceActivity : AppCompatActivity() {
 
+    // Bluetooth settings
     private var m_bluetoothAdapter: BluetoothAdapter? = null
     private lateinit var m_pairedDevices: Set<BluetoothDevice>
     private val REQUEST_ENABLE_BLUETOOTH = 1
 
     companion object {
+        // Store address of selected devices for subsequent pages to access
         val EXTRA_ADDRESS: String = "Device_Address"
     }
 
+    // Initialize the page
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.select_device_layout)
 
+        // Get system's bluetooth helper
         m_bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
         //Make sure device is able to use bluetooth
@@ -40,11 +44,16 @@ class SelectDeviceActivity : AppCompatActivity() {
             startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BLUETOOTH)
         }
 
+        // Re-retrieve list of available devices each time refresh is clicked
         select_device_refresh.setOnClickListener { pairedDeviceList() }
+        // Get initial list of paired devices
         pairedDeviceList()
 
     }
 
+    /**
+     * Ask the phone what bluetooth devices it knows about and parse the list for display.
+     */
     private fun pairedDeviceList() {
         m_pairedDevices = m_bluetoothAdapter!!.bondedDevices
         val list: ArrayList<BluetoothDevice> = ArrayList()
@@ -72,6 +81,7 @@ class SelectDeviceActivity : AppCompatActivity() {
         }
     }
 
+    // On successful loading of the page, ask the user to enable bluetooth if  they haven't already
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_ENABLE_BLUETOOTH) {
